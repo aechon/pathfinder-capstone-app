@@ -1,0 +1,60 @@
+Table users {
+  id integer [primary key]
+  username varchar
+  email varchar
+  hashed_password varchar
+}
+
+Table trips {
+  id integer [primary key]
+  name varchar
+  description text
+  start_lat float
+  start_long float
+  end_lat float
+  end_long float
+  duration int
+  user_id int
+  created_at timestamp
+  modified_at timestamp
+}
+
+Table detours {
+  id integer [primary key]
+  name varchar
+  description text
+  lat float
+  long float
+  trip_id int
+  origin_waypoint_id int
+  stop_number int
+  created_at timestamp
+  modified_at timestamp
+}
+
+Table waypoints {
+  id integer [primary key]
+  trip_id int
+  description text
+  lat float
+  long float
+  time int
+  created_at timestamp
+  modified_at timestamp
+}
+
+Table preference_tags {
+  id integer [primary key]
+  user_id int
+  tag varchar
+}
+
+Ref: trips.user_id > users.id // many-to-one
+
+Ref: detours.trip_id > trips.id
+
+Ref: waypoints.trip_id > trips.id
+
+Ref: preference_tags.user_id > users.id
+
+Ref: detours.origin_waypoint_id > waypoints.id
