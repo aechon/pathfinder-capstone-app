@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Detour.belongsTo(models.Trips, {foreignKey: 'trip_id'});
+      Detour.belongsTo(models.Trip, {foreignKey: 'trip_id'});
     }
   }
   Detour.init({
