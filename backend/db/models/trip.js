@@ -13,13 +13,13 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Trip.belongsTo(models.User, {foreignKey: 'user_id'});
 
-      Trip.hasMany(models.Waypoints {
+      Trip.hasMany(models.Waypoints, {
         foreignKey: 'trip_id',
         onDelete: 'CASCADE',
         hooks: true
       });
 
-      Trip.hasMany(models.Detours {
+      Trip.hasMany(models.Detours, {
         foreignKey: 'trip_id',
         onDelete: 'CASCADE',
         hooks: true
