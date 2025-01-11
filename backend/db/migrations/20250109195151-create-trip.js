@@ -22,6 +22,9 @@ module.exports = {
       description: {
         type: Sequelize.STRING(1000)
       },
+      start_address: {
+        type: Sequelize.STRING
+      },
       start_lat: {
         allowNull: false,
         type: Sequelize.FLOAT
@@ -29,6 +32,9 @@ module.exports = {
       start_lng: {
         allowNull: false,
         type: Sequelize.FLOAT
+      },
+      end_address: {
+        type: Sequelize.STRING
       },
       end_lat: {
         allowNull: false,

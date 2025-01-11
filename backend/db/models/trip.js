@@ -35,6 +35,9 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.STRING
     },
+    start_address: {
+      type: DataTypes.STRING
+    },
     start_lat: {
       type: DataTypes.NUMERIC,
       allowNull: false,
@@ -46,6 +49,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       min: -180,
       max: 180
+    },
+    end_address: {
+      type: DataTypes.STRING
     },
     end_lat: {
       type: DataTypes.NUMERIC,

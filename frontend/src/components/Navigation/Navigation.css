@@ -1,3 +1,19 @@
 .hidden {
-    display: none;
-  }
+  display: none;
+}
+
+.nav-bar {
+  list-style: none; /* Remove bullet points */
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  margin: 0; /* Remove default margin */
+  display: flex; /* Display items in a row */
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  max-height: 30px;
+  max-width: auto;
+}

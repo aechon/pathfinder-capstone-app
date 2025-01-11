@@ -5,6 +5,7 @@ import * as sessionActions from '../../store/session';
 import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
+import './ProfileButton.css';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -48,24 +49,42 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
+            <li>Welcome {user.username}</li>
             <li>{user.email}</li>
+            <li className='user-action trip-action'>
+              <OpenModalMenuItem
+                itemText="My Trips"
+                onItemClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
+            </li>
+            <li className='user-action trip-action'>
+              <OpenModalMenuItem
+                itemText="New Trip"
+                onItemClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (
           <>
-            <OpenModalMenuItem
+            <div className='user-action'>
+              <OpenModalMenuItem
               itemText="Log In"
               onItemClick={closeMenu}
               modalComponent={<LoginFormModal />}
-            />
-            <OpenModalMenuItem
+              />
+            </div>
+            <div className='user-action'>
+              <OpenModalMenuItem
               itemText="Sign Up"
               onItemClick={closeMenu}
               modalComponent={<SignupFormModal />}
-            />
+              />
+            </div>
           </>
         )}
       </ul>

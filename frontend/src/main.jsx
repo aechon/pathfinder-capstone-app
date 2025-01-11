@@ -7,7 +7,9 @@ import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import { Modal, ModalProvider } from './context/Modal';
+import { APIProvider } from '@vis.gl/react-google-maps';
 
+const MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const store = configureStore();
 
 if (process.env.NODE_ENV !== 'production') {
@@ -20,11 +22,13 @@ if (process.env.NODE_ENV !== 'production') {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ModalProvider>
-      <Provider store={store}>
-        <App />
-        <Modal />
-      </Provider>
-    </ModalProvider>
+    <APIProvider apiKey={MAPS_KEY}>
+      <ModalProvider>
+        <Provider store={store}>
+          <App />
+          <Modal />
+        </Provider>
+      </ModalProvider>
+    </APIProvider>
   </React.StrictMode>
 );
