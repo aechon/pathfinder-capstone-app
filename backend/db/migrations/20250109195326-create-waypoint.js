@@ -15,7 +15,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      trip_id: {
+      tripId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         reference: {

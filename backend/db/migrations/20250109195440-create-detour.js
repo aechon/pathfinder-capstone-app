@@ -15,7 +15,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      trip_id: {
+      tripId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         reference: {
@@ -39,7 +39,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.FLOAT
       },
-      origin_waypoint: {
+      originWaypoint: {
         allowNull: false,
         type: Sequelize.INTEGER,
         reference: {
@@ -47,7 +47,7 @@ module.exports = {
           key: 'id'
         }
       },
-      stop_number: {
+      stopNumber: {
         allowNull: false,
         type: Sequelize.INTEGER
       },

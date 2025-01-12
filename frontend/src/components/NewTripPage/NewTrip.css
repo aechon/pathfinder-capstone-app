@@ -54,7 +54,7 @@
   .error-message {
     color: red; /* Red color for error messages */
     font-size: 14px; /* Font size for error messages */
-    margin: 0 0 10px 0; /* Margin below error messages */
+    margin: 3px 0; /* Margin below error messages */
   }
   
   /* Button Styles */

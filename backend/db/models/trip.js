@@ -11,61 +11,69 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Trip.belongsTo(models.User, {foreignKey: 'user_id'});
+      Trip.belongsTo(models.User, {foreignKey: 'userId'});
 
       Trip.hasMany(models.Waypoint, {
-        foreignKey: 'trip_id',
+        foreignKey: 'tripId',
         onDelete: 'CASCADE',
         hooks: true
       });
 
       Trip.hasMany(models.Detour, {
-        foreignKey: 'trip_id',
+        foreignKey: 'tripId',
         onDelete: 'CASCADE',
         hooks: true
       });
     }
   }
   Trip.init({
-    name: {
+    // name: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   len: [1, 50]
+    // },
+    // description: {
+    //   type: DataTypes.STRING
+    // },
+    startAddress: {
+      type: DataTypes.STRING
+    },
+    startLat: {
+      type: DataTypes.NUMERIC,
+      allowNull: false,
+      min: -90,
+      max: 90
+    },
+    startLng: {
+      type: DataTypes.NUMERIC,
+      allowNull: false,
+      min: -180,
+      max: 180
+    },
+    endAddress: {
+      type: DataTypes.STRING
+    },
+    endLat: {
+      type: DataTypes.NUMERIC,
+      allowNull: false,
+      min: -90,
+      max: 90
+    },
+    endLng: {
+      type: DataTypes.NUMERIC,
+      allowNull: false,
+      min: -180,
+      max: 180
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    distance: {
       type: DataTypes.STRING,
-      allowNull: false,
-      len: [1, 50]
+      allowNull: false
     },
-    description: {
-      type: DataTypes.STRING
-    },
-    start_address: {
-      type: DataTypes.STRING
-    },
-    start_lat: {
-      type: DataTypes.NUMERIC,
-      allowNull: false,
-      min: -90,
-      max: 90
-    },
-    start_lng: {
-      type: DataTypes.NUMERIC,
-      allowNull: false,
-      min: -180,
-      max: 180
-    },
-    end_address: {
-      type: DataTypes.STRING
-    },
-    end_lat: {
-      type: DataTypes.NUMERIC,
-      allowNull: false,
-      min: -90,
-      max: 90
-    },
-    end_lng: {
-      type: DataTypes.NUMERIC,
-      allowNull: false,
-      min: -180,
-      max: 180
-    },
-    user_id: {
+    userId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       onDelete: 'CASCADE'

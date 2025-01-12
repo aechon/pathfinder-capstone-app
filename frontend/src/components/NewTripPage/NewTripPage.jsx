@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Map,
   AdvancedMarker,
@@ -8,6 +9,7 @@ import {
 import { FaMapMarkerAlt } from 'react-icons/fa';
 import { PlaceAutocomplete } from "../GoogleMaps";
 import './NewTrip.css';
+import { csrfFetch } from "../../store/csrf";
 
 const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_BASIC_MAP_ID;
 const DEFAULT_MAP_CENTER = [37.7900, -122.4009] //App Academy
@@ -22,7 +24,9 @@ function NewTripPage() {
     const [ directionsService, setDirectionsService ] = useState();
     const [ directionsRenderer, setDirectionsRenderer ] = useState();
     const [ route, setRoute ] = useState(null);
+    const [ errors, setErrors ] = useState({})
     const map = useMap();
+    const navigate = useNavigate();
 
     useEffect(() => {
       if (!routesLibrary || !map) return;
@@ -119,70 +123,63 @@ function NewTripPage() {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        console.log(route.routes[0].legs[0]);
+      e.preventDefault();
 
-        // format data for dispatch
-        const data = {
-          startLat: startData.latitude,
-          startLng: startData.longitude,
-          endLat: endData.latitude,
-          endLng: endData.longitude,
-          duration: route.routes[0].legs[0].duration.value,
-          distance: route.routes[0].legs[0].distance.text
-        };
-        if (startData.type === 'coords') data.startAddress = "User's Location";
-        else data.startAddress = startData.address;
-        if (endData.type === 'coords') data.endAddress = "User's Location";
-        else data.endAddress = endData.address;
+      // format trip data
+      const data = {
+        startLat: startData.latitude,
+        startLng: startData.longitude,
+        endLat: endData.latitude,
+        endLng: endData.longitude,
+        duration: route.routes[0].legs[0].duration.value,
+        distance: route.routes[0].legs[0].distance.text
+      };
+      if (startData.type === 'coords') data.startAddress = "User's Location";
+      else data.startAddress = startData.address;
+      if (endData.type === 'coords') data.endAddress = "User's Location";
+      else data.endAddress = endData.address;
 
-        data.steps = route.routes[0].legs[0].steps.map(step => {
-          return {
-            duration: step.duration.value,
-            startLat: step.start_point.lat(),
-            startLng: step.start_point.lng(),
-            endLat: step.end_point.lat(),
-            endLng: step.end_point.lng(),
+      data.steps = route.routes[0].legs[0].steps.map(step => {
+        const stepData = {
+          duration: step.duration.value,
+          startLat: step.start_point.lat(),
+          startLng: step.start_point.lng(),
+          endLat: step.end_point.lat(),
+          endLng: step.end_point.lng(),
+        }
+        if (stepData.duration > 300) {// Waypoint interval
+          const steps = Math.floor(stepData.duration / 300);
+          const interval = Math.floor(step.lat_lngs.length / steps);
+          stepData.lat_lngs = [];
+          for (let i = 1; i <= steps; i++) {
+            stepData.lat_lngs.push({
+              lat: step.lat_lngs[i*interval].lat(),
+              lng: step.lat_lngs[i*interval].lng()
+            })
           }
-        });
+        }
+        return stepData;
+      });
 
-        console.log(data);
-
-        // Format data for dispatch
-        // const data = {
-        //   startAddress
-        // }
-        // startLat
-        // startLng
-        // endAddress
-        // endLat
-        // endLng
-        // duration
-        // distance
-        // Steps []
-
-        // Dispatch the newTrip action
-        // const serverResponse = await dispatch(
-        //   editEvent({
-        //     start,
-        //     duration,
-        //     type,
-        //     interviewer,
-        //     jobId,
-        //     contactId
-        //   }, eventId)
-        // );
-    
-        // if (serverResponse) {
-        //   // If there's an error from the server, set the errors
-        //   setErrors(serverResponse);
-        //   console.log(errors);
-        // } else {
-        
-        //   await dispatch(fetchJobDetails(jobId)); // Fetch updated job details after editing <============================
-        //   closeModal(); // Close the modal
-        // }  
+      // New trip action
+      await csrfFetch('/api/trips/new', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(() => {
+        navigate('/success');
+        return;
+      })
+      .catch((err) => {
+        const errorData = {};
+        if (err) errorData = err.json();
+        return errorData;
+      }).then((err) => {
+        if (err) setErrors(err);
+      });
     };
 
   return (
@@ -248,7 +245,8 @@ function NewTripPage() {
               </>
             )}
           </Map>
-        <button className='new-trip-button' type='submit' disabled={disable}>Add Trip</button>
+        {errors.message && <p className="error-message">{errors.message}</p>} 
+        <button className='new-trip-button' type='submit' disabled={disable}>Add Trip</button>   
       </form>
     </div>
   );

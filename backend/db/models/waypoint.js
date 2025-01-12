@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Waypoint.belongsTo(models.Trip, {foreignKey: 'trip_id'});
+      Waypoint.belongsTo(models.Trip, {foreignKey: 'tripId'});
     }
   }
   Waypoint.init({
-    trip_id: {
+    tripId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       onDelete: 'CASCADE'

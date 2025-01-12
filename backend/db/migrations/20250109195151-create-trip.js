@@ -15,36 +15,44 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        allowNull: false,
-        type: Sequelize.STRING(30)
-      },
-      description: {
-        type: Sequelize.STRING(1000)
-      },
-      start_address: {
+      // name: {
+      //   allowNull: false,
+      //   type: Sequelize.STRING(30)
+      // },
+      // description: {
+      //   type: Sequelize.STRING(1000)
+      // },
+      startAddress: {
         type: Sequelize.STRING
       },
-      start_lat: {
+      startLat: {
         allowNull: false,
         type: Sequelize.FLOAT
       },
-      start_lng: {
+      startLng: {
         allowNull: false,
         type: Sequelize.FLOAT
       },
-      end_address: {
+      endAddress: {
         type: Sequelize.STRING
       },
-      end_lat: {
+      endLat: {
         allowNull: false,
         type: Sequelize.FLOAT
       },
-      end_lng: {
+      endLng: {
         allowNull: false,
         type: Sequelize.FLOAT
       },
-      user_id: {
+      duration: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      distance: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         reference: {

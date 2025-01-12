@@ -7,14 +7,15 @@ Table users {
 
 Table trips {
   id integer [primary key]
-  name varchar
-  description text
-  start_lat float
-  start_long float
-  end_lat float
-  end_long float
+  startAddress varchar
+  startLat float
+  startLng float
+  endAddress varchar
+  endLat float
+  endLng float
   duration int
-  user_id int
+  distance varchar
+  userId int
   created_at timestamp
   modified_at timestamp
 }
@@ -23,19 +24,19 @@ Table detours {
   id integer [primary key]
   name varchar
   description text
+  address varchar
   lat float
   long float
-  trip_id int
-  origin_waypoint_id int
-  stop_number int
+  tripId int
+  originWaypoint int
+  stopNumber int
   created_at timestamp
   modified_at timestamp
 }
 
 Table waypoints {
   id integer [primary key]
-  trip_id int
-  description text
+  tripId int
   lat float
   long float
   time int
@@ -45,16 +46,16 @@ Table waypoints {
 
 Table preference_tags {
   id integer [primary key]
-  user_id int
+  userId int
   tag varchar
 }
 
-Ref: trips.user_id > users.id // many-to-one
+Ref: trips.userId > users.id 
 
-Ref: detours.trip_id > trips.id
+Ref: detours.tripId > trips.id
 
-Ref: waypoints.trip_id > trips.id
+Ref: waypoints.tripId > trips.id
 
-Ref: preference_tags.user_id > users.id
+Ref: preference_tags.userId > users.id
 
-Ref: detours.origin_waypoint_id > waypoints.id
+Ref: detours.originWaypoint > waypoints.id

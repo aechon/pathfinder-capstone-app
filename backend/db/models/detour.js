@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Detour.belongsTo(models.Trip, {foreignKey: 'trip_id'});
+      Detour.belongsTo(models.Trip, {foreignKey: 'tripId'});
     }
   }
   Detour.init({
-    trip_id: {
+    tripId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       onDelete: 'CASCADE'
@@ -39,11 +39,11 @@ module.exports = (sequelize, DataTypes) => {
       min: -180,
       max: 180
     },
-    origin_waypoint: {
+    originWaypoint: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    stop_number: {
+    stopNumber: {
       type: DataTypes.INTEGER,
       allowNull: false
     }

@@ -71,4 +71,20 @@ const requireAuth = function (req, _res, next) {
     return next(err);
   }
 
-module.exports = { setTokenCookie, restoreUser, requireAuth };
+// Check to make sure the user matches
+const checkAuth = function (req, ...id) {
+
+  const { token } = req.cookies;
+
+  const decoded = jwt.verify(token, secret);
+
+  for (let i = 0; i < id.length; i++) {
+    if (decoded.data.id === id[i]) return;
+  }
+  
+  return {
+    message: "Forbidden"
+  };
+}
+
+module.exports = { setTokenCookie, restoreUser, requireAuth, checkAuth };
