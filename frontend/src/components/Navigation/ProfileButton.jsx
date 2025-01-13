@@ -6,6 +6,7 @@ import OpenModalMenuItem from './OpenModalMenuItem';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignupFormModal';
 import './ProfileButton.css';
+import { NavLink } from 'react-router-dom';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -51,20 +52,12 @@ function ProfileButton({ user }) {
           <>
             <li>Welcome {user.username}</li>
             <li>{user.email}</li>
-            <li className='user-action trip-action'>
-              <OpenModalMenuItem
-                itemText="My Trips"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-            </li>
-            <li className='user-action trip-action'>
-              <OpenModalMenuItem
-                itemText="New Trip"
-                onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-            </li>
+            <NavLink to='/' className='dropdown-link' onClick={toggleMenu}>
+              <li className='user-action trip-action'>My Trips</li>
+            </NavLink>
+            <NavLink to='trips/new' className='dropdown-link' onClick={toggleMenu}>
+              <li className='user-action trip-action'>New Trip</li>
+            </NavLink>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>

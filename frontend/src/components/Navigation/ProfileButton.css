@@ -34,3 +34,10 @@
     list-style: circle;
     margin-left: 20px;
   }
+
+  .dropdown-link {
+    color: black;
+    text-decoration: none;
+    width: auto;
+    height: auto;
+  }

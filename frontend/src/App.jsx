@@ -4,6 +4,7 @@ import { Outlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
 import NewTripPage from './components/NewTripPage';
+import TripDetailsPage from './components/TripDetailsPage/TripDetailsPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -29,11 +30,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
+        element: <h1>Landing Page</h1>
+      },
+      {
+        path: '/trips/new',
         element: <NewTripPage />
       },
       {
-        path: '/success',
-        element: <h1>Success!</h1>
+        path: '/trips/:tripId',
+        element: <TripDetailsPage />
       }
     ]
   }

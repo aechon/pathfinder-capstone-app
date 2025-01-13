@@ -1,0 +1,112 @@
+.trip-container {
+    background-color: #fff; /* White background for the modal */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    padding: 5px 20px; /* Padding inside the modal */
+    max-width: 400px; /* Maximum width of the modal */
+    margin: 20px auto; /* Center the modal */
+  }
+    
+  .trip-title {
+    text-align: center; /* Center the title */
+    color: #333; /* Dark text color */
+  }
+    
+  .trip-start-end-container {
+    display: grid;
+  }
+
+  .trip-label {
+    margin-bottom: 8px; /* Space below labels */
+    font-weight: bold; /* Bold labels */
+    color: #555; /* Darker color for labels */
+  }
+
+  .trip-span {
+    display: flex;
+    margin-bottom: 8px; /* Space below labels */
+    font-weight: bold; /* Bold labels */
+    color: #555; /* Darker color for labels */
+  }
+
+  .trip-span-content {
+    width: 50%;
+  }
+
+  .trip-text {
+    color: black;
+    font-size: 14px;
+  }
+
+  .error-message {
+    color: red; /* Red color for error messages */
+    font-size: 14px; /* Font size for error messages */
+    margin: 3px 0; /* Margin below error messages */
+  }
+  
+  /* Button Styles */
+  .detour-button {
+    background-color: blue; /* Blue background for the button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Padding for the button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    margin: 10px 10px;
+    width: 100%;
+  }
+    
+  .detour-button:hover {
+    background-color: darkblue; 
+  }
+  
+  .detour-button:disabled {
+    background-color: lightblue; 
+  }
+
+  .detour-title {
+    text-align: center; /* Center the title */
+    color: #333; /* Dark text color */
+    margin-bottom: 5px;
+  }
+
+  .detour-container {
+    width: 100%;
+    display: grid;
+  }
+
+  .detour-options-container {
+    width: 100%;
+    display: flex;
+  }
+
+  .detour-buttons-container {
+    width: 100%;
+    display: flex;
+  }
+
+  .detour-input-span {
+    display:flex;
+    width: 50%;
+    /* justify-content: center; */
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .detour-label {
+    font-size: 14px;
+  }
+  
+  .detour-time-input {
+    text-align: right;
+    width: 30%;
+    margin-left: 5px;
+  }
+
+  .detour-type-select {
+    width: 65%;
+    margin-left: 5px;
+  }
+  

@@ -153,8 +153,8 @@ function NewTripPage() {
           stepData.lat_lngs = [];
           for (let i = 1; i <= steps; i++) {
             stepData.lat_lngs.push({
-              lat: step.lat_lngs[i*interval].lat(),
-              lng: step.lat_lngs[i*interval].lng()
+              lat: step.lat_lngs[(i*interval)-1].lat(),
+              lng: step.lat_lngs[(i*interval)-1].lng()
             })
           }
         }
@@ -170,11 +170,11 @@ function NewTripPage() {
         body: JSON.stringify(data),
       })
       .then(() => {
-        navigate('/success');
+        navigate('/');
         return;
       })
       .catch((err) => {
-        const errorData = {};
+        let errorData = {};
         if (err) errorData = err.json();
         return errorData;
       }).then((err) => {

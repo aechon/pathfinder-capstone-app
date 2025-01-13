@@ -20,7 +20,7 @@
   .new-trip-label {
     margin-bottom: 8px; /* Space below labels */
     font-weight: bold; /* Bold labels */
-    color: #555; /* Darker color for labels */
+    color: #555; /* Lighter color for labels */
   }
     
   .new-trip-input-container {
@@ -59,7 +59,7 @@
   
   /* Button Styles */
   .new-trip-button {
-    background-color: blue; /* Green background for the button */
+    background-color: blue; /* Blue background for the button */
     color: white; /* White text color */
     border: none; /* Remove border */
     padding: 10px 15px; /* Padding for the button */
@@ -71,9 +71,9 @@
   }
     
   .new-trip-button:hover {
-    background-color: darkblue; /* Darker green on hover */
+    background-color: darkblue; /* Darker blue on hover */
   }
   
   .new-trip-button:disabled {
-    background-color: lightblue; /* Darker green on hover */
+    background-color: lightblue; /* Lighter blue on disable */
   }
