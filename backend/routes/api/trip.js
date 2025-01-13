@@ -1,8 +1,8 @@
 const express = require('express')
 const { check } = require('express-validator');
 
-const { requireAuth } = require('../../utils/auth');
-const { Trip, Waypoint } = require('../../db/models');
+const { requireAuth, checkAuth } = require('../../utils/auth');
+const { Trip, Waypoint, Detour } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
@@ -119,5 +119,65 @@ router.post(
 
     return res.status(201).json(trip);
   });
+
+// Get waypoint based on time and trip
+router.get(
+  `/:tripId/waypoint/:time`,
+  requireAuth,
+  async (req, res) => {
+    const tripId = req.path.split('/')[1];
+    const time = req.path.split('/')[3];
+
+    const waypoints = await Waypoint.findAll({
+        where: {
+            tripId: tripId
+        },
+        order: [
+            ['time', 'ASC']
+        ]
+    });
+
+    if (waypoints.length === 0) return res.status(404).json({
+        message: "No waypoints found for trip"
+    });
+
+    const waypoint = waypoints.find((waypoint) => {
+        return waypoint.time + WAYPOINT_INTERVAL >= time;
+    })
+
+    if (!waypoint) return res.status(404).json({
+        message: "Time exceeds trip time"
+    });
+
+    return res.status(200).json(waypoint);
+  });
+
+// Get trip details
+router.get(
+  `/:tripId`,
+  requireAuth,
+  async (req, res) => {
+    const tripId = req.path.split('/')[1];
+
+    const trip = await Trip.findOne({
+        where: {
+            id: tripId
+        },
+        include: {
+            model: Detour
+        }
+    });
+
+    if (!trip) return res.status(404).json({
+        message: "Trip couldn't be found"
+    });
+
+    const err = checkAuth(req, trip.userId);
+    if (err) return res.status(403).json(err);
+
+    return res.status(200).json(trip);
+  });
+
+
 
 module.exports = router;
