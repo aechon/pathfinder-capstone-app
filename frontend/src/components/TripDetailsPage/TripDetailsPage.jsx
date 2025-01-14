@@ -161,7 +161,7 @@ function TripDetailsPage() {
                 }
                 return stepData;
             });
-            data.steps = [...data.steps, ...stepData];;
+            data.steps = [...data.steps, ...stepData];
         });
 
         // New route time and distance
@@ -182,7 +182,7 @@ function TripDetailsPage() {
     setTime("");
     setNewDetour({});
     setWaypoint({});
-  }, [dispatch, newDetour, waypoint, tripDetails, tripId, type])
+  }, [dispatch, newDetour, waypoint, tripDetails, tripId, type, directionsService])
 
   // If not logged in redirect to homepage
   if (!sessionUser) return <Navigate to="/" replace={true} />;
