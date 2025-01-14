@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    description: {
+    type: {
       type: DataTypes.STRING
     },
     lat: {
@@ -39,14 +39,14 @@ module.exports = (sequelize, DataTypes) => {
       min: -180,
       max: 180
     },
-    originWaypoint: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    stopNumber: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
+    // originWaypoint: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false
+    // },
+    // stopNumber: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false
+    // }
   }, {
     sequelize,
     modelName: 'Detour',

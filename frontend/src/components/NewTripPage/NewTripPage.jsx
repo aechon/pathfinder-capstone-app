@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
   Map,
   AdvancedMarker,
@@ -15,6 +16,7 @@ const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_BASIC_MAP_ID;
 const DEFAULT_MAP_CENTER = [37.7900, -122.4009] //App Academy
 
 function NewTripPage() {    
+    const sessionUser = useSelector((state) => state.session.user);
     const [ start, setStart ] = useState('');
     const [ startData, setStartData ] = useState({type: ''});
     const [ end, setEnd ] = useState('');
@@ -87,6 +89,9 @@ function NewTripPage() {
         map.fitBounds(route.routes[0].bounds);
       } 
     }, [map, start, end, startData, endData, route]);
+
+    // If not logged in redirect to homepage
+    if (!sessionUser) return <Navigate to="/" replace={true} />;
 
     const handleGetUserLocation = () => {
       if (navigator.geolocation) {

@@ -28,7 +28,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(256)
       },
-      description: {
+      type: {
         type: Sequelize.STRING
       },
       lat: {
@@ -39,18 +39,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.FLOAT
       },
-      originWaypoint: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        reference: {
-          model: 'Waypoints',
-          key: 'id'
-        }
-      },
-      stopNumber: {
-        allowNull: false,
-        type: Sequelize.INTEGER
-      },
+      // originWaypoint: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER,
+      //   reference: {
+      //     model: 'Waypoints',
+      //     key: 'id'
+      //   }
+      // },
+      // stopNumber: {
+      //   allowNull: false,
+      //   type: Sequelize.INTEGER
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -49,6 +49,29 @@ export const fetchTripDetails = (tripId) => async (dispatch) => {
   }
 };
 
+export const createDetour = (data) => async (dispatch) => {
+  try {
+    const response = await csrfFetch('/api/detours/new', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+
+    if (response.ok) {
+      const trip = await response.json();
+      dispatch(setTripDetails(trip));
+    } else {
+      const errorData = await response.json();
+      dispatch(setTripErrors(errorData));
+    }
+  } catch (error) {
+    console.error('Error adding detour:', error);
+    dispatch(setTripErrors({ server: 'An unexpected error occurred.' }));
+  }
+} 
+
 // Initial state
 const initialState = {
   tripDetails: null,

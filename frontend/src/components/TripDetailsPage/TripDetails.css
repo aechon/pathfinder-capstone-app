@@ -6,10 +6,20 @@
     max-width: 400px; /* Maximum width of the modal */
     margin: 20px auto; /* Center the modal */
   }
-    
+
+  .trip-edit-container {
+    display: flex;
+    justify-content: end;
+  }
+
+  .trip-edit-dropdown {
+    font-size: 10px;
+  }
+
   .trip-title {
     text-align: center; /* Center the title */
     color: #333; /* Dark text color */
+    margin-top: 0px;
   }
     
   .trip-start-end-container {
@@ -110,3 +120,8 @@
     margin-left: 5px;
   }
   
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

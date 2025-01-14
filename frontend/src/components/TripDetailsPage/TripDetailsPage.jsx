@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTripDetails, clearTripDetails } from '../../store/trip';
+import { Navigate } from "react-router-dom";
+import { fetchTripDetails, clearTripDetails, createDetour } from '../../store/trip';
 import { useParams } from 'react-router-dom';
 import {
     Map,
@@ -11,6 +12,8 @@ import {
 import { FaMapMarkerAlt } from "react-icons/fa";
 import './TripDetails.css';
 import { csrfFetch } from "../../store/csrf";
+import { useModal } from "../../context/Modal";
+import DetourOptionsModal from "../DetourListModal/DetourListModal";
 
 const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_BASIC_MAP_ID;
 const DEFAULT_MAP_CENTER = [37.7900, -122.4009] //App Academy
@@ -19,7 +22,9 @@ const NEARBY_LOCATION_SEARCH_RADIUS = 5000;
 function TripDetailsPage() {
   const { tripId } = useParams();
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
   const { tripDetails, loading, error } = useSelector((state) => state.trip);
+  const { setModalContent } = useModal();
   const map = useMap();
   const routesLibrary = useMapsLibrary("routes");
   const placesLibrary = useMapsLibrary("places");
@@ -29,6 +34,8 @@ function TripDetailsPage() {
   const [ route, setRoute ] = useState(null);
   const [ type, setType ] = useState("");
   const [ time, setTime ] = useState("");
+  const [ waypoint, setWaypoint ] = useState({});
+  const [ newDetour, setNewDetour ] = useState({});
   const [ disable, setDisable ] = useState(true);
   const [ errors, setErrors ] = useState({})
 
@@ -51,13 +58,25 @@ function TripDetailsPage() {
   useEffect(() => {
     if (!directionsService || !directionsRenderer || !tripDetails) return;
 
-    let origin = {lat: tripDetails.startLat, lng: tripDetails.startLng};
-    let destination = tripDetails.endAddress;
-    
+    let data = {
+        origin: {lat: tripDetails.startLat, lng: tripDetails.startLng},
+        destination: tripDetails.endAddress
+    }
+    if (tripDetails.Detours.length > 0) {
+        data.waypoints = tripDetails.Detours.map((detour) => {
+            return {
+                location: {
+                    lat: detour.lat, lng: detour.lng
+                },
+                stopover: true
+            }
+        })
+        data.optimizeWaypoints = true;
+    }
+
     directionsService
       .route({
-        origin: origin,
-        destination: destination,
+        ...data,
         travelMode: "DRIVING",
       })
       .then((response) => {
@@ -78,6 +97,95 @@ function TripDetailsPage() {
     else if (tripDetails.duration < time*60) setDisable(true)
     else setDisable(false);
   }, [type, time, tripDetails]);
+
+  useEffect(() => {
+    if (Object.keys(newDetour).length === 0 || Object.keys(waypoint).length === 0 || !tripDetails) return;
+
+    // console.log(newDetour);
+    let data = {
+      tripId: tripId,
+      name:  newDetour.name,
+      type: type,
+      lat: newDetour.geometry.location.lat(),
+      lng: newDetour.geometry.location.lng(),
+    };
+
+    // Get route with detour
+    let newRouteData = {
+        origin: {lat: tripDetails.startLat, lng: tripDetails.startLng},
+        destination: tripDetails.endAddress,
+        optimizeWaypoints: true,
+    };
+    newRouteData.waypoints = tripDetails.Detours.map((detour) => {
+        return {
+            location: {
+                lat: detour.lat, lng: detour.lng
+            },
+            stopover: true
+        }
+    });
+    newRouteData.waypoints.push({
+        location: {
+            lat: data.lat, lng: data.lng
+        },
+        stopover: true
+    });
+
+    directionsService
+      .route({
+        ...newRouteData,
+        travelMode: "DRIVING",
+      })
+      .then((response) => {
+        // New route step data
+        data.steps = [];
+        response.routes[0].legs.forEach(leg => {
+            const stepData = leg.steps.map(step => {
+                const stepData = {
+                  duration: step.duration.value,
+                  startLat: step.start_point.lat(),
+                  startLng: step.start_point.lng(),
+                  endLat: step.end_point.lat(),
+                  endLng: step.end_point.lng(),
+                }
+                if (stepData.duration > 300) {// Waypoint interval
+                  const steps = Math.floor(stepData.duration / 300);
+                  const interval = Math.floor(step.lat_lngs.length / steps);
+                  stepData.lat_lngs = [];
+                  for (let i = 1; i <= steps; i++) {
+                    stepData.lat_lngs.push({
+                      lat: step.lat_lngs[(i*interval)-1].lat(),
+                      lng: step.lat_lngs[(i*interval)-1].lng()
+                    })
+                  }
+                }
+                return stepData;
+            });
+            data.steps = [...data.steps, ...stepData];;
+        });
+
+        // New route time and distance
+        data.duration = 0;
+        let distance = 0;
+        for (let i = 0; i < response.routes[0].legs.length; i++) {
+            data.duration += response.routes[0].legs[i].duration.value;
+            distance += response.routes[0].legs[i].distance.value;
+        }
+        data.distance = `${Math.round(distance / 1609 * 10) / 10} mi`;
+
+        // Add detour
+        dispatch(createDetour(data));
+      });
+
+    // Reset data
+    setType("");
+    setTime("");
+    setNewDetour({});
+    setWaypoint({});
+  }, [dispatch, newDetour, waypoint, tripDetails, tripId, type])
+
+  // If not logged in redirect to homepage
+  if (!sessionUser) return <Navigate to="/" replace={true} />;
 
   if (loading) {
     return <div className="trip-container">Loading...</div>;
@@ -106,12 +214,14 @@ function TripDetailsPage() {
       })
       .then((waypoint) => {
         // get places nearby based on waypoint
-        console.log(waypoint);
+        setWaypoint(waypoint);
         placeService.nearbySearch({
             location: {lat: waypoint.lat, lng: waypoint.lng},
             radius: NEARBY_LOCATION_SEARCH_RADIUS,
+            type: type
           }, (results) => {
-            console.log(results);
+            if (results.length === 0) setErrors({message: 'No establishments of this kind nearby!'});
+            else setModalContent(<DetourOptionsModal options={results} setNewDetour={setNewDetour}/>); 
           }
         );
       })
@@ -129,8 +239,14 @@ function TripDetailsPage() {
     console.log("new quick detour");
   };
 
+//   console.log(tripDetails);
+//   console.log(route);
+
   return (
     <div className="trip-container">
+      <span className="trip-edit-container">
+        <button className="trip-edit-dropdown">Edit</button>
+      </span>
       <h2 className="trip-title">Trip Details</h2>
       <div className="trip-start-end-container">
         <span className='trip-label'>
@@ -168,7 +284,7 @@ function TripDetailsPage() {
           />
         </AdvancedMarker>
       </Map>
-      <h3 className="detour-title">Detours</h3>
+      <h3 className="detour-title">Detour</h3>
       <span className="detour-container">
         <div className="detour-options-container">
           <span className="detour-input-span">
@@ -196,7 +312,8 @@ function TripDetailsPage() {
         {tripDetails.Detours.length === 0 ? (
         <p className="error-message">No detour added yet.</p>
         ) : (
-            <p>{tripDetails.Detours[0]}</p>
+            <></>
+            // <p>{tripDetails.Detours[0]}</p>
         )}
         {errors.message && <p className="error-message">{errors.message}</p>}
         <div className="detour-buttons-container">
