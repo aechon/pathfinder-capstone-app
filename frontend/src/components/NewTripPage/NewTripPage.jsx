@@ -174,9 +174,11 @@ function NewTripPage() {
         },
         body: JSON.stringify(data),
       })
-      .then(() => {
-        navigate('/');
-        return;
+      .then((res) => {
+        return res.json();
+      })
+      .then((trip) => {
+        navigate(`/trips/${trip.id}`);
       })
       .catch((err) => {
         let errorData = {};

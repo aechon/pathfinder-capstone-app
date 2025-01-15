@@ -8,8 +8,7 @@
     padding: 0;
     margin: 0;
     position: absolute; /* Position it below the button */
-    top: 46px;
-    right: 28px;
+    right: 20px;
     background-color: white; /* Background color */
     border: 1px solid #ccc; /* Border */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Shadow */

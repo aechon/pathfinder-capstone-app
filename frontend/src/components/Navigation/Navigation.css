@@ -11,9 +11,14 @@
   display: flex; /* Display items in a row */
   align-items: center;
   justify-content: space-between;
+  position: relative;
 }
 
 .logo {
   max-height: 30px;
   max-width: auto;
+}
+
+button:hover {
+  cursor: pointer;
 }

@@ -70,7 +70,53 @@ export const createDetour = (data) => async (dispatch) => {
     console.error('Error adding detour:', error);
     dispatch(setTripErrors({ server: 'An unexpected error occurred.' }));
   }
-} 
+};
+
+export const editEndpoint = (data) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/trips/${data.tripId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+
+    if (response.ok) {
+      const trip = await response.json();
+      dispatch(setTripDetails(trip));
+    } else {
+      const errorData = await response.json();
+      dispatch(setTripErrors(errorData));
+    }
+  } catch (error) {
+    console.error('Error editing endpoint detour:', error);
+    dispatch(setTripErrors({ server: 'An unexpected error occurred.' }));
+  }
+};
+
+export const deleteDetour = (data) => async (dispatch) => {
+  try {
+    const response = await csrfFetch('/api/detours/delete', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+
+    if (response.ok) {
+      const trip = await response.json();
+      dispatch(setTripDetails(trip));
+    } else {
+      const errorData = await response.json();
+      dispatch(setTripErrors(errorData));
+    }
+  } catch (error) {
+    console.error('Error removing detour:', error);
+    dispatch(setTripErrors({ server: 'An unexpected error occurred.' }));
+  }
+};
 
 // Initial state
 const initialState = {

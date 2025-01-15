@@ -59,7 +59,7 @@ router.post(
     });
 
     if (!trip) return res.status(404).json({
-        message: "Trip attempting to add detour to couldn't be found"
+        message: "Trip to add detour to couldn't be found"
     });
 
     const err = checkAuth(req, trip.userId);
@@ -89,7 +89,7 @@ router.post(
         }
       });
 
-    // // Delete previous waypoints
+    // Delete previous waypoints
     await Waypoint.destroy({
         where: {
           tripId: tripId
@@ -128,6 +128,95 @@ router.post(
     await Waypoint.bulkCreate(waypointsData);
 
     return res.status(201).json(newTrip);
+  });
+
+// Delete Detour
+router.delete(
+  '/delete',
+  requireAuth,
+  async (req, res) => {
+    const { 
+        tripId,
+        detourId,
+        duration,
+        distance,
+        steps
+      } = req.body;
+  
+    const trip = await Trip.findOne({
+      where: {
+        id: tripId
+      }
+    });
+  
+    if (!trip) return res.status(404).json({
+        message: "Trip to delete detour from couldn't be found"
+    });
+  
+    const err = checkAuth(req, trip.userId);
+    if (err) return res.status(403).json(err);
+
+    const detour = await Detour.findOne({
+        where: {
+          id: detourId
+        }
+    });
+    await detour.destroy();
+  
+    // Update distance and duration
+    trip.duration = duration;
+    trip.distance = distance;
+    await trip.save();
+  
+    // Get updated trip
+    const newTrip = await Trip.findOne({
+        where: {
+          id: tripId
+        },
+        include: {
+          model: Detour
+        }
+      });
+  
+    // Delete previous waypoints
+    await Waypoint.destroy({
+        where: {
+          tripId: tripId
+        }
+      });
+
+    // Generate waypoints for new trip with detour
+    let timeElapsed = 0;
+    let intervalCount = 0;
+    let i = 0;
+    let waypointsData = [];
+    while ( i < steps.length) {
+        if (steps[i].duration + intervalCount < WAYPOINT_INTERVAL) {
+            intervalCount += steps[i].duration;
+            i++;
+        } else {
+            if (steps[i].duration < WAYPOINT_INTERVAL) {
+                intervalCount = (steps[i].duration + intervalCount) % WAYPOINT_INTERVAL;
+                timeElapsed += WAYPOINT_INTERVAL;
+                waypointsData.push({tripId: trip.id, time: timeElapsed + intervalCount, lat: steps[i].endLat, lng: steps[i].endLng});
+                i++;
+            } else {
+                let j = 0;
+                let subSteps = Math.floor(steps[i].duration / WAYPOINT_INTERVAL);
+                while (j < subSteps) {
+                    timeElapsed += WAYPOINT_INTERVAL;
+                    waypointsData.push({tripId: trip.id, time: timeElapsed + intervalCount, lat: steps[i].lat_lngs[j].lat, lng: steps[i].lat_lngs[j].lng});
+                    j++;
+                }
+                steps[i].duration = steps[i].duration % WAYPOINT_INTERVAL;
+            }
+        }
+    }
+  
+    // Attempt to create new waypoints
+    await Waypoint.bulkCreate(waypointsData);
+  
+    return res.status(200).json(newTrip);
   });
 
 module.exports = router;

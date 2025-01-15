@@ -1,0 +1,45 @@
+.edit-endpoint-modal {
+    background-color: #fff; /* White background for the modal */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    padding: 20px; /* Padding inside the modal */
+    min-width: 300px;
+    max-width: 350px; /* Maximum width of the modal */
+    margin: -10px auto; /* Center the modal */
+  }
+    
+  .edit-endpoint-modal-title {
+    text-align: center; /* Center the title */
+    color: #333; /* Dark text color */
+    margin-top: 0px;
+    margin-bottom: 5px;
+  }
+
+  .edit-endpoint-modal-container {
+    display: grid;
+    justify-content: center;
+  }
+
+  .edit-endpoint-modal-container input {
+    width: 280px;
+    margin: 10px 0px;
+  }
+
+  .edit-endpoint-button {
+    background-color: blue; /* Blue background for the button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 5px 15px; /* Padding for the button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+    
+  .edit-endpoint-button:hover {
+    background-color: darkblue; 
+  }
+  
+  .edit-endpoint-button:disabled {
+    background-color: lightblue; 
+  }

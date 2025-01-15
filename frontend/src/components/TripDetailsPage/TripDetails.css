@@ -10,10 +10,33 @@
   .trip-edit-container {
     display: flex;
     justify-content: end;
+    position: relative;
+  }
+
+  .trip-edit-dropdown-button {
+    font-size: 10px;
   }
 
   .trip-edit-dropdown {
-    font-size: 10px;
+    cursor: pointer;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: absolute; /* Position it below the button */
+    top: 18px;
+    background-color: white; /* Background color */
+    border: 1px solid #ccc; /* Border */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Shadow */
+    z-index: 2;
+  }
+
+  .trip-edit-dropdown-option {
+    font-size: 12px;
+    padding: 3px;
+  }
+
+  .trip-edit-dropdown-option:hover {
+    background-color: #f0f0f0;
   }
 
   .trip-title {
@@ -34,13 +57,21 @@
 
   .trip-span {
     display: flex;
-    margin-bottom: 8px; /* Space below labels */
+    margin-bottom: 10px; /* Space below labels */
     font-weight: bold; /* Bold labels */
     color: #555; /* Darker color for labels */
+    padding-bottom: 5px;
+    border-bottom-style: solid;
+    border-color: #ccc;
+    justify-content: space-between;
   }
 
   .trip-span-content {
-    width: 50%;
+    width: 60%;
+  }
+
+  .trip-label-content {
+    margin-right: 10px;
   }
 
   .trip-text {
@@ -79,7 +110,10 @@
   .detour-title {
     text-align: center; /* Center the title */
     color: #333; /* Dark text color */
-    margin-bottom: 5px;
+    margin: 10px 0px;
+    border-top-style: solid;
+    border-color: #ccc;
+    padding-top: 10px;
   }
 
   .detour-container {
@@ -87,9 +121,33 @@
     display: grid;
   }
 
+  .detour-item-container {
+    padding: 5px 0px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners */
+    display: flex;
+  }
+
   .detour-options-container {
     width: 100%;
     display: flex;
+    margin-top: 10px;
+  }
+
+  .detour-name {
+    width: 80%;
+    font-size: 14px;
+    padding: 3px;
+    margin-left: 5px;
+  }
+
+  .detour-button-delete {
+    font-weight: bold;
+  }
+
+  .detour-button-delete:hover {
+    cursor: pointer;
   }
 
   .detour-buttons-container {
