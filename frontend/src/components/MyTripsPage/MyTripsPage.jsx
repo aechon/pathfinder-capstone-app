@@ -58,7 +58,7 @@ function MyTripsPage() {
             <div className="trip-empty-container">
                 <p className="trip-error-message">No Trips Found!</p>
                 <NavLink to='/trips/new'>
-                  <button className="add-trip-button">Add new trip.</button>
+                  <button className="add-trip-button">Add new trip</button>
                 </NavLink>
             </div>
         ) : (
