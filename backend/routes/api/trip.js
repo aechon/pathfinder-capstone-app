@@ -201,8 +201,8 @@ router.put(
   `/:tripId`,
   requireAuth,
   async (req, res) => {
+    const tripId = req.path.split('/')[1];
     const { 
-        tripId,
         startAddress,
         startLat, 
         startLng, 
@@ -280,6 +280,32 @@ router.put(
     await Waypoint.bulkCreate(waypointsData);
   
     return res.status(201).json(trip);
+  });
+
+// Delete trip
+router.delete(
+  `/:tripId`,
+  requireAuth,
+  async (req, res) => {
+    const tripId = req.path.split('/')[1];
+    
+    const trip = await Trip.findOne({
+      where: {
+        id: tripId
+      }
+    });
+  
+    if (!trip) return res.status(204).json({
+        message: "Trip to delete couldn't be found"
+    });
+  
+    const err = checkAuth(req, trip.userId);
+    if (err) return res.status(403).json(err);
+  
+    // Delete trip
+    await trip.destroy();
+  
+    return res.status(200).json('Trip deleted');
   });
 
 module.exports = router;

@@ -5,6 +5,7 @@ import Navigation from './components/Navigation';
 import * as sessionActions from './store/session';
 import NewTripPage from './components/NewTripPage';
 import TripDetailsPage from './components/TripDetailsPage/TripDetailsPage';
+import MyTripsPage from './components/MyTripsPage/MyTripsPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <h1>Landing Page</h1>
+      },
+      {
+        path: '/trips',
+        element: <MyTripsPage />
       },
       {
         path: '/trips/new',

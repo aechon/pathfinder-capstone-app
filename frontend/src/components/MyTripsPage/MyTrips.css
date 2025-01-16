@@ -1,0 +1,80 @@
+.trips-list-container {
+    margin: 20px auto;
+    max-width: 2200px;
+  }
+
+  .trips-list {
+    background-color: #fff; /* White background for the modal */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    padding: 5px 10px;
+    width: 90%;
+    margin: 20px auto;
+  }
+
+  .trips-list-title {
+    text-align: center; /* Center the title */
+    color: #333; /* Dark text color */
+    margin-top: 10px;
+  }
+
+  .trip-empty-container {
+    margin: auto;
+    display: grid;
+    justify-content: center;
+  }
+
+  .trip-error-message {
+    color: red;
+    text-align: center;
+  }
+
+  .add-trip-button {
+    background-color: blue; /* Blue background for the button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Padding for the button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    margin: 10px 0px;
+    width: 100%;
+  }
+    
+  .add-trip-button:hover {
+    background-color: darkblue; 
+  }
+
+
+  .trip-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0px 20px;
+  }
+  
+  .trip-card-wrapper {
+    display: grid;
+    margin: auto;
+    margin-bottom: 30px;
+    justify-content: center;
+  }
+
+  /* Button Styles */
+  .trip-delete-button {
+    background-color: blue; /* Blue background for the button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Padding for the button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    margin: 10px auto;
+    width: 95%;
+  }
+    
+  .trip-delete-button:hover {
+    background-color: darkblue; /* Darker blue on hover */
+  }

@@ -89,7 +89,7 @@ function TripDetailsPage() {
         directionsRenderer.setDirections(response);
         setRoute(response);
       });
-  }, [directionsService, directionsRenderer, tripDetails])
+  }, [directionsService, directionsRenderer, tripDetails]);
 
   useEffect(() => {
     if (!map) return;

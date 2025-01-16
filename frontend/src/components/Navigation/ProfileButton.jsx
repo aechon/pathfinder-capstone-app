@@ -52,7 +52,7 @@ function ProfileButton({ user }) {
           <>
             <li>Welcome {user.username}</li>
             <li>{user.email}</li>
-            <NavLink to='/' className='dropdown-link' onClick={toggleMenu}>
+            <NavLink to='/trips' className='dropdown-link' onClick={toggleMenu}>
               <li className='user-action trip-action'>My Trips</li>
             </NavLink>
             <NavLink to='trips/new' className='dropdown-link' onClick={toggleMenu}>

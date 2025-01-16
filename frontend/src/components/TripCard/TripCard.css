@@ -1,0 +1,15 @@
+.trip-card {
+    width: 400px;
+    margin: 10px auto;
+    padding: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: lightgray;
+    border-radius: 10px;
+  }
+
+.trip-card-label {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
