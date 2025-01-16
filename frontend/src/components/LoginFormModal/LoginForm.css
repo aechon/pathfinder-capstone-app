@@ -1,0 +1,51 @@
+.login-modal {
+    background-color: #fff; /* White background for the modal */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    padding: 20px; /* Padding inside the modal */
+    min-width: 300px;
+    max-width: 300px; /* Maximum width of the modal */
+    margin: -10px auto; /* Center the modal */
+  }
+    
+  .login-modal-title {
+    text-align: center; /* Center the title */
+    color: #333; /* Dark text color */
+    margin-top: 0px;
+  }
+
+  .login-modal-form {
+    display: grid;
+  }
+
+  .login-modal-label {
+    display: grid;
+    padding: 0px 5px;
+    margin: 0px 10px;
+  }
+
+  .login-modal-input {
+    margin: 10px 0px;
+  }
+
+  /* Button Styles */
+  .login-button {
+    background-color: blue; /* Blue background for the button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Padding for the button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    margin: 10px auto;
+    width: 90%;
+  }
+    
+  .login-button:hover {
+    background-color: darkblue; /* Darker blue on hover */
+  }
+  
+  .login-button:disabled {
+    background-color: lightblue; /* Lighter blue on disable */
+  }

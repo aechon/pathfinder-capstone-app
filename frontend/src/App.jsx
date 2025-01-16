@@ -6,6 +6,7 @@ import * as sessionActions from './store/session';
 import NewTripPage from './components/NewTripPage';
 import TripDetailsPage from './components/TripDetailsPage/TripDetailsPage';
 import MyTripsPage from './components/MyTripsPage/MyTripsPage';
+import LandingPage from './components/LandingPage/LandingPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <h1>Landing Page</h1>
+        element: <LandingPage />
       },
       {
         path: '/trips',

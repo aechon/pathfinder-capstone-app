@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import * as sessionActions from '../../store/session';
@@ -11,7 +11,13 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [disable, setDisable] = useState(false);
   const { closeModal } = useModal();
+
+  useEffect(() => {
+      if (!email || !username || !password || !confirmPassword) setDisable(true);
+      else setDisable(false);
+    }, [email, username, password, confirmPassword])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -38,12 +44,12 @@ function SignupFormModal() {
   };
 
   return (
-    <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <div className='signup-modal'>
+      <h1 className='signup-modal-title'>Sign Up</h1>
+      <form className='signup-modal-form' onSubmit={handleSubmit}>
+        <label className='signup-modal-label'>
           Email
-          <input
+          <input className='signup-modal-input'
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -51,9 +57,9 @@ function SignupFormModal() {
           />
         </label>
         {errors.email && <p>{errors.email}</p>}
-        <label>
+        <label className='signup-modal-label'>
           Username
-          <input
+          <input className='signup-modal-input'
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -61,9 +67,9 @@ function SignupFormModal() {
           />
         </label>
         {errors.username && <p>{errors.username}</p>}
-        <label>
+        <label className='signup-modal-label'>
           Password
-          <input
+          <input className='signup-modal-input'
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -71,9 +77,9 @@ function SignupFormModal() {
           />
         </label>
         {errors.password && <p>{errors.password}</p>}
-        <label>
+        <label className='signup-modal-label'>
           Confirm Password
-          <input
+          <input className='signup-modal-input'
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -83,9 +89,9 @@ function SignupFormModal() {
         {errors.confirmPassword && (
           <p>{errors.confirmPassword}</p>
         )}
-        <button type="submit">Sign Up</button>
+        <button className='signup-button' type="submit" disabled={disable}>Sign Up</button>
       </form>
-    </>
+    </div>
   );
 }
 

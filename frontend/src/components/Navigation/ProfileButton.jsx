@@ -50,7 +50,7 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>Welcome {user.username}</li>
+            <li>{user.username}</li>
             <li>{user.email}</li>
             <NavLink to='/trips' className='dropdown-link' onClick={toggleMenu}>
               <li className='user-action trip-action'>My Trips</li>

@@ -1,0 +1,14 @@
+.landing-title {
+    text-align: center;
+    margin-top: 30vh;
+    color: steelblue;
+    font-size: 40px;
+    font-family: monospace;
+}
+
+.landing-subtitle {
+    color: slategray;
+    text-align: center;
+    font-size: 25px;
+    font-family: monospace;
+}

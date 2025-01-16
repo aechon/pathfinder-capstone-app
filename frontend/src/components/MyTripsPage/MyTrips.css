@@ -63,7 +63,7 @@
 
   /* Button Styles */
   .trip-delete-button {
-    background-color: blue; /* Blue background for the button */
+    background-color: coral; /* Blue background for the button */
     color: white; /* White text color */
     border: none; /* Remove border */
     padding: 10px 15px; /* Padding for the button */
@@ -76,5 +76,5 @@
   }
     
   .trip-delete-button:hover {
-    background-color: darkblue; /* Darker blue on hover */
+    background-color: red; /* Darker blue on hover */
   }
