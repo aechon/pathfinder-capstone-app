@@ -295,7 +295,7 @@ router.delete(
       }
     });
   
-    if (!trip) return res.status(204).json({
+    if (!trip) return res.status(404).json({
         message: "Trip to delete couldn't be found"
     });
   

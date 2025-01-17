@@ -5,6 +5,8 @@ const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const tripRouter = require('./trip.js');
 const detourRouter = require('./detour.js')
+const tagRouter = require('./tag.js');
+const vehicleRouter = require('./vehicle.js');
 
 
 // Connect restoreUser middleware to the API router
@@ -17,5 +19,7 @@ router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/trips', tripRouter);
 router.use('/detours', detourRouter);
+router.use('/tags', tagRouter);
+router.use('/vehicles', vehicleRouter);
 
 module.exports = router;
