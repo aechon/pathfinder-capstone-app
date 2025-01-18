@@ -2,11 +2,13 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import tripReducer from './trip';
+import preferenceReducer from './preference';
 
 const rootReducer = combineReducers({
   // ADD REDUCERS HERE
   session: sessionReducer,
   trip: tripReducer,
+  preference: preferenceReducer
 });
 
 let enhancer;

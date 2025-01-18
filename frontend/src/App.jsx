@@ -7,6 +7,8 @@ import NewTripPage from './components/NewTripPage';
 import TripDetailsPage from './components/TripDetailsPage/TripDetailsPage';
 import MyTripsPage from './components/MyTripsPage/MyTripsPage';
 import LandingPage from './components/LandingPage/LandingPage';
+import MyVehiclesPage from './components/MyVehiclesPage';
+import MyPreferencesPage from './components/MyPreferencesPage/MyPreferencesPage';
 
 function Layout() {
   const dispatch = useDispatch();
@@ -37,6 +39,14 @@ const router = createBrowserRouter([
       {
         path: '/trips',
         element: <MyTripsPage />
+      },
+      {
+        path: '/vehicles',
+        element: <MyVehiclesPage />
+      },
+      {
+        path: '/preferences',
+        element: <MyPreferencesPage />
       },
       {
         path: '/trips/new',

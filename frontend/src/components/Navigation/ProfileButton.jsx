@@ -52,11 +52,17 @@ function ProfileButton({ user }) {
           <>
             <li>{user.username}</li>
             <li>{user.email}</li>
+            <NavLink to='trips/new' className='dropdown-link' onClick={toggleMenu}>
+              <li className='user-action trip-action'>New Trip</li>
+            </NavLink>
             <NavLink to='/trips' className='dropdown-link' onClick={toggleMenu}>
               <li className='user-action trip-action'>My Trips</li>
             </NavLink>
-            <NavLink to='trips/new' className='dropdown-link' onClick={toggleMenu}>
-              <li className='user-action trip-action'>New Trip</li>
+            <NavLink to='/vehicles' className='dropdown-link' onClick={toggleMenu}>
+              <li className='user-action trip-action'>My Vehicles</li>
+            </NavLink>
+            <NavLink to='/preferences' className='dropdown-link' onClick={toggleMenu}>
+              <li className='user-action trip-action'>My Preferences</li>
             </NavLink>
             <li>
               <button onClick={logout}>Log Out</button>

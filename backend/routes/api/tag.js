@@ -31,6 +31,15 @@ router.post(
         type
     } = req.body;
 
+    const duplicate = await Tag.findOne({
+      where: {
+        userId: req.user.id,
+        tag: tag
+      }
+    });
+
+    if (duplicate) return res.status(400).json({ message: "Tag already exists"});
+
     const newTag = await Tag.create({
         tag: tag,
         type: type,

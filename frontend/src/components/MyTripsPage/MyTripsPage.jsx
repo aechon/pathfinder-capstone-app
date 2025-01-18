@@ -28,7 +28,11 @@ function MyTripsPage() {
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
   if (loading) {
-    return <div className="trips-list-container">Loading...</div>;
+    return <div className="trips-list-container">
+      <div className="trips-list">
+        Loading...
+      </div>
+    </div>;
   }
 
   if (error) {
