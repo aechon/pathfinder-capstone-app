@@ -1,0 +1,59 @@
+.vehicle-modal {
+    background-color: #fff; /* White background for the modal */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    padding: 20px; /* Padding inside the modal */
+    min-width: 300px;
+    max-width: 350px; /* Maximum width of the modal */
+    margin: -10px auto; /* Center the modal */
+  }
+    
+  .vehicle-modal-title {
+    text-align: center; /* Center the title */
+    color: #333; /* Dark text color */
+    margin-top: 0px;
+    margin-bottom: 20px;
+  }
+
+  .vehicle-modal-form {
+    display: grid;
+  }
+
+  .vehicle-modal-label {
+    margin-bottom: 15px; /* Space below labels */
+    font-weight: bold; /* Bold labels */
+    color: #555; /* Darker color for labels */
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .vehicle-modal-input {
+    margin-left: 10px;
+    block-size: fit-content;
+    width: 184px;
+  }
+
+  .vehicle-modal-number-input {
+    width: 60px;
+    /* text-align: end; */
+  }
+
+  .vehicle-modal-button {
+    background-color: blue; /* Blue background for the button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 5px 15px; /* Padding for the button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    margin: auto;
+  }
+    
+  .vehicle-modal-button:hover {
+    background-color: darkblue; 
+  }
+  
+  .vehicle-modal-button:disabled {
+    background-color: lightblue; 
+  }

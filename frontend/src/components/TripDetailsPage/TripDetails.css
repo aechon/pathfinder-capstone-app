@@ -70,6 +70,25 @@
     width: 60%;
   }
 
+  .trip-vehicle-span {
+    display: flex;
+    margin-bottom: 10px; /* Space below labels */
+    font-weight: bold; /* Bold labels */
+    color: #555; /* Darker color for labels */
+    padding-bottom: 5px;
+    border-bottom-style: solid;
+    border-color: #ccc;
+    justify-content: space-between;
+    max-width: 400px;
+  }
+
+  .trip-span-vehicle { 
+    width: 50%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+  }
+
   .trip-label-content {
     margin-right: 10px;
   }

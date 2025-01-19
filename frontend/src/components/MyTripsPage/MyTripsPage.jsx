@@ -28,11 +28,16 @@ function MyTripsPage() {
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
   if (loading) {
-    return <div className="trips-list-container">
-      <div className="trips-list">
-        Loading...
+    return ( 
+      <div className="trips-list-container">
+        <div className="trips-list">
+          <h2 className="trips-list-title">My Trips</h2>
+          <div className="trip-cards-container">
+            Loading...
+          </div>
+        </div>
       </div>
-    </div>;
+    )
   }
 
   if (error) {
@@ -59,8 +64,8 @@ function MyTripsPage() {
       <h2 className="trips-list-title">My Trips</h2>
       <div className="trip-cards-container">
         {trips.length === 0 ? (
-            <div className="trip-empty-container">
-                <p className="trip-error-message">No Trips Found!</p>
+            <div className="empty-list-container">
+                <p className="empty-list-error-message">No Trips Found!</p>
                 <NavLink to='/trips/new'>
                   <button className="add-trip-button">Add new trip</button>
                 </NavLink>

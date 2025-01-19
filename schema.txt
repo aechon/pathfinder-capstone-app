@@ -1,11 +1,14 @@
-Table users {
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table Users {
   id integer [primary key]
   username varchar
   email varchar
   hashed_password varchar
 }
 
-Table trips {
+Table Trips {
   id integer [primary key]
   startAddress varchar
   startLat float
@@ -20,21 +23,18 @@ Table trips {
   modified_at timestamp
 }
 
-Table detours {
+Table Detours {
   id integer [primary key]
   name varchar
-  description text
-  address varchar
+  type varchar
   lat float
-  long float
+  lng float
   tripId int
-  originWaypoint int
-  stopNumber int
   created_at timestamp
   modified_at timestamp
 }
 
-Table waypoints {
+Table Waypoints {
   id integer [primary key]
   tripId int
   lat float
@@ -44,18 +44,29 @@ Table waypoints {
   modified_at timestamp
 }
 
-Table preference_tags {
+Table Tags {
   id integer [primary key]
   userId int
   tag varchar
+  type varchar
 }
 
-Ref: trips.userId > users.id 
+Table Vehicles {
+  id integer [primary key]
+  userId int
+  name varchar
+  type varchar
+  mpg int
+  tankSize int
+  range int
+}
 
-Ref: detours.tripId > trips.id
+Ref: Trips.userId > Users.id 
 
-Ref: waypoints.tripId > trips.id
+Ref: Detours.tripId > Trips.id
 
-Ref: preference_tags.userId > users.id
+Ref: Waypoints.tripId > Trips.id
 
-Ref: detours.originWaypoint > waypoints.id
+Ref: Tags.userId > Users.id
+
+Ref: Vehicles.userId > Users.id

@@ -18,13 +18,13 @@
     margin-top: 10px;
   }
 
-  .trip-empty-container {
+  .empty-list-container {
     margin: auto;
     display: grid;
     justify-content: center;
   }
 
-  .trip-error-message {
+  .empty-list-error-message {
     color: red;
     text-align: center;
   }

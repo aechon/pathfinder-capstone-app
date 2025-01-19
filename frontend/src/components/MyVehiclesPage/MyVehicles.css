@@ -1,0 +1,149 @@
+.vehicle-list-container {
+    margin: 20px auto;
+    max-width: 1000px;
+  }
+
+  .vehicle-list {
+    background-color: #fff; /* White background for the modal */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    padding: 5px 10px;
+    width: 90%;
+    margin: 20px auto;
+    justify-content: center;
+  }
+
+  .vehicle-list-title {
+    text-align: center; /* Center the title */
+    color: #333; /* Dark text color */
+    margin-top: 10px;
+  }
+
+  .vehicle-wrapper {
+    display: grid;
+    grid-template-columns: 8fr 2fr;
+    padding: 8px 15px;
+    margin: 10px 15px;
+    border-style: solid;
+    border-radius: 8px;
+    border-color: lightgray;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+
+  .vehicle-details {
+    display: grid;
+    font-size: 16px;
+    align-items: center;
+  }
+
+  .vehicle-name {
+    font-size: 18px;
+    font-weight: bolder;
+  }
+
+  .vehicle-gas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .vehicle-buttons-container {
+    display: grid;
+  }
+
+  .vehicle-button {
+    display: grid;
+    background-color: blue; /* Blue background for the button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 5px 5px; /* Padding for the button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    margin: 2px auto;
+    width: 80px;
+  }
+
+  .new-vehicle-button {
+    display: grid;
+    background-color: blue; /* Blue background for the button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 10px 15px; /* Padding for the button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    margin: 15px auto;
+    width: 200px;
+  }
+    
+  .new-vehicle-button:hover {
+    background-color: darkblue; 
+  }
+
+
+  .add-tag-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+ .tag-label {
+    margin-bottom: 8px; /* Space below labels */
+    font-weight: bold; /* Bold labels */
+    color: #555; /* Darker color for labels */
+    margin-inline: 20px;
+ }
+
+ .tag-input {
+    margin: 10px;
+    width: 140px;
+ }
+
+ .tag-button {
+    background-color: blue; /* Blue background for the button */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    padding: 5px 10px; /* Padding for the button */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 13px; /* Font size for button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+  }
+    
+  .tag-button:hover {
+    background-color: darkblue; 
+  }
+  
+  .tag-button:disabled {
+    background-color: lightblue; 
+  }
+ 
+  .tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+
+  .tag {
+    padding: 3px 7px 3px 12px; /* Padding for the tag */
+    border-radius: 15px; /* Rounded corners */
+    font-size: 13px; /* Font size for button */
+    margin: 2px 5px;
+  }
+
+  .like {
+    background-color: lightgreen;
+  }
+
+  .dislike {
+    background-color: lightcoral;
+  }
+
+  .tag-remove-button {
+    font-weight: bolder;
+    background-color: transparent;
+    border: none;
+  }

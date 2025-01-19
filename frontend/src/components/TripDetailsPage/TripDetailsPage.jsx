@@ -15,6 +15,7 @@ import { csrfFetch } from "../../store/csrf";
 import { useModal } from "../../context/Modal";
 import DetourOptionsModal from "../DetourListModal/DetourListModal";
 import EditEndpointModal from "./EditEndpointModal";
+import VehicleListModal from "../VehicleListModal/VehicleListModal";
 
 const MAP_ID = import.meta.env.VITE_GOOGLE_MAPS_BASIC_MAP_ID;
 const DEFAULT_MAP_CENTER = [37.7900, -122.4009] //App Academy
@@ -41,7 +42,8 @@ function TripDetailsPage() {
   const [ newEnd, setNewEnd ] = useState({});
   const [ disable, setDisable ] = useState(true);
   const [ errors, setErrors ] = useState({});
-  const [showEditMenu, setShowEditMenu] = useState(false);
+  const [ showEditMenu, setShowEditMenu] = useState(false);
+  const [ vehicle, setVehicle ] = useState(null);
   const ulRef = useRef();
 
   useEffect(() => {
@@ -397,6 +399,11 @@ function TripDetailsPage() {
     setShowEditMenu(false);
   }
 
+  const handleSelectVehicle = () => {
+    setModalContent(<VehicleListModal setVehicle={setVehicle}/>);
+    setShowEditMenu(false);
+  }
+
   // Opens modal to choose detour location
   const handleAddDetour = async () => {
 
@@ -533,6 +540,7 @@ function TripDetailsPage() {
         <ul className={ulClassName} ref={ulRef}>
             <li className="trip-edit-dropdown-option" onClick={handleEditStart}>Edit Start</li>
             <li className="trip-edit-dropdown-option" onClick={handleEditEnd}>Edit Destination</li>
+            <li className="trip-edit-dropdown-option" onClick={handleSelectVehicle}>Select Vehicle</li>
         </ul>
       </span>
       <h2 className="trip-title">Trip Details</h2>
@@ -547,6 +555,23 @@ function TripDetailsPage() {
             <label className="trip-span-content">Duration: <b className="trip-text">{Math.floor(tripDetails.duration / 3600)} Hours, {Math.floor(tripDetails.duration % 3600 / 60)} Minutes</b></label>
             <label className="trip-label-content">Distance: <b className="trip-text">{tripDetails.distance}</b></label>
         </span>
+        {vehicle ? (
+          <>
+            {vehicle.type === 'electric' ? (
+              <span className="trip-vehicle-span">
+                <label className="trip-span-vehicle">Vehicle: <b className="trip-text">{vehicle.name}</b></label>
+                <label className="trip-label-content"><b className="trip-text">Charging Stops Required: {Math.floor(tripDetails.distance.split(' ')[0]/vehicle.range)}</b></label>
+              </span>
+            ) : ((
+              <span className="trip-vehicle-span">
+                <label className="trip-span-vehicle">Vehicle: <b className="trip-text">{vehicle.name}</b></label>
+                <label className="trip-label-content"><b className="trip-text">Gas Stops Required: {Math.floor(tripDetails.distance.split(' ')[0]/(vehicle.mpg*vehicle.tankSize))}</b></label>
+              </span>
+            ))}
+          </>
+        ) : (
+          <></>
+        )}
       </div>
 
       <Map

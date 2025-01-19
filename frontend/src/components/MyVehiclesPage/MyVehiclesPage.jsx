@@ -1,83 +1,118 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
-// import { Navigate, NavLink } from "react-router-dom";
-// import { fetchUserTrips, clearTrips, deleteTrip } from '../../store/trip';
+import { Navigate } from "react-router-dom";
+import { fetchUserVehicles, clearVehicles, deleteVehicle } from '../../store/vehicle';
 import './MyVehicles.css';
-// import { useModal } from "../../context/Modal";
-
-
+import { useModal } from "../../context/Modal";
+import { EditVehicleModal, NewVehicleModal } from "../VehicleModal";
 
 function MyVehiclesPage() {
-//   const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
-//   const { trips, loading, error } = useSelector((state) => state.trip);
+  const { vehicles, loading, error } = useSelector((state) => state.vehicle);
+  const { setModalContent } = useModal();
 
+  useEffect(() => {
+    dispatch(fetchUserVehicles());
 
-//   useEffect(() => {
-//     dispatch(fetchUserTrips());
-
-//     return () => {
-//         dispatch(clearTrips());
-//     }
-//   }, [dispatch]);
+    return () => {
+        dispatch(clearVehicles());
+    }
+  }, [dispatch]);
 
   // If not logged in redirect to homepage
   if (!sessionUser) return <Navigate to="/" replace={true} />;
 
-//   if (loading) {
-//     return <div className="trips-list-container">
-//       <div className="trips-list">
-//         Loading...
-//       </div>
-//     </div>;
-//   }
+  if (loading) {
+    return ( 
+      <div className="vehicle-list-container">
+        <div className="vehicle-list">
+          <h2 className="vehicle-list-title">My Vehicles</h2>
+          <div className="vehicle-container">
+            Loading...
+          </div>
+        </div>
+      </div>
+    )
+  }
 
-//   if (error) {
-//     return <div className="trips-list-container">Error: {error.message || 'Failed to load trips.'}</div>;
-//   }
+  if (error) {
+    return <div className="vehicles-list-container">Error: {error.message || 'Failed to load trips.'}</div>;
+  }
   
-//   if (!trips) {
-//     return <div className="trips-list-container">No trip details found.</div>;
-//   }
+  if (!vehicles) {
+    return <div className="vehicles-list-container">No vehicles found.</div>;
+  }
 
-//   const handleDeleteTrip = (id) => {
-//     return async () => {
-//       const response = await dispatch(deleteTrip(id));
+  const handleEditVehicle = (index) => {
+    return async () => {
+      setModalContent(<EditVehicleModal vehicleData={vehicles[index]} />)
+    }
+  }
 
-//       if (response.ok) {
-//         dispatch(fetchUserTrips());
-//       }
-//     }
-//   }
+  const handleDeleteVehicle = (id) => {
+    return async () => {
+      const response = await dispatch(deleteVehicle(id));
+
+      if (response.ok) {
+        dispatch(fetchUserVehicles());
+      }
+    }
+  }
+
+  const handleNewVehicle = async () => {
+    setModalContent(<NewVehicleModal />)
+  }
 
   return (
     <div className="vehicle-list-container">
-      <div className="trips-list">
-      <h2 className="trips-list-title">My Vehicles</h2>
-      {/* <div className="trip-cards-container">
-        {trips.length === 0 ? (
-            <div className="trip-empty-container">
-                <p className="trip-error-message">No Trips Found!</p>
-                <NavLink to='/trips/new'>
-                  <button className="add-trip-button">Add new trip</button>
-                </NavLink>
+      <div className="vehicle-list">
+        <h2 className="vehicle-list-title">My Vehicles</h2>
+        <div className="vehicle-container">
+          {vehicles.length === 0 ? (
+            <div className="empty-list-container">
+                <p className="empty-list-error-message">No Vehicles Found!</p>
             </div>
-        ) : (
-          <>
-            {trips.map((trip) => {
-              return (
-                <div className="trip-card-wrapper" key={trip.id}>
-                  <NavLink to={`/trips/${trip.id}`} style={{textDecoration: 'none'}}>
-                    <TripCard trip={trip} mapId={MAP_ID} id={trip.id} />
-                  </NavLink>
-                  <button className="trip-delete-button" onClick={handleDeleteTrip(trip.id)}>Delete</button>
-                </div>
-              )
-            })}
-          </>
-        )}
-      </div> */}
-    </div>
+          ) : (
+            <>
+              {vehicles.map((vehicle, index) => {
+                if (vehicle.type === 'gas') return (
+                  <div className="vehicle-wrapper" key={vehicle.id}>
+                    <div className="vehicle-details">
+                      <span className="vehicle-name">{vehicle.name}</span>
+                      <span className="vehicle-gas">
+                        <div>
+                          <b>Fuel Economy: </b> {vehicle.mpg} mpg
+                        </div>
+                        <div>
+                          <b>Tank Capacity: </b> {vehicle.tankSize} gallons
+                        </div>
+                      </span>
+                    </div>
+                    <div className="vehicle-buttons-container">
+                      <button className="vehicle-button" onClick={handleEditVehicle(index)}>Edit</button>
+                      <button className="vehicle-button" onClick={handleDeleteVehicle(vehicle.id)}>Delete</button>
+                    </div>
+                  </div>
+                )
+                if (vehicle.type === 'electric') return (
+                  <div className="vehicle-wrapper" key={vehicle.id}>
+                    <div className="vehicle-details">
+                      <span className="vehicle-name">{vehicle.name}</span>
+                      <span><b>Max Charge Range: </b>{vehicle.range} miles</span>
+                    </div>
+                    <div className="vehicle-buttons-container">
+                      <button className="vehicle-button" onClick={handleEditVehicle(index)}>Edit</button>
+                      <button className="vehicle-button" onClick={handleDeleteVehicle(vehicle.id)}>Delete</button>
+                    </div>
+                  </div>
+                )
+              })}
+            </>
+          )}
+        </div>
+        <button className="new-vehicle-button" onClick={handleNewVehicle}>Add New Vehicle</button>
+      </div>
     </div>
   );
 }
