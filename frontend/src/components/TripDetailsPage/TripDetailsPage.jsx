@@ -439,21 +439,65 @@ function TripDetailsPage() {
     });
   };
 
-
-
-  
-
   // Adds detour location of type without user choosing
   const handleQuickAddDetour = async () => {
-    console.log("new quick detour");
-    console.log("coming soon");
+
+    // fetch nearby waypoint
+    await csrfFetch(`/api/trips/${tripId}/waypoint/${time*60}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    })
+    .then((res) => {
+      return res.json();
+    })
+    .then((waypoint) => {
+      // get places nearby based on waypoint
+      setWaypoint(waypoint);
+      placeService.nearbySearch({
+          location: {lat: waypoint.lat, lng: waypoint.lng},
+          radius: NEARBY_LOCATION_SEARCH_RADIUS,
+          type: type
+        }, (results) => {
+          if (results.length === 0) setErrors({message: 'No establishments of this kind nearby!'});
+          else {
+            const data = results.map(location => {
+              return {
+                name: location.name,
+                types: location.types.filter(type => {
+                  return type != 'establishment' && type != 'point_of_interest'
+                }),
+                price_level: location.price_level,
+                user_rating: location.rating,
+                total_user_ratings: location.user_ratings_total,
+              }
+            })
+            csrfFetch('/api/detours/quick', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+            })
+            .then(res => {
+              return res.json();
+            })
+            .then(detour => {
+              setNewDetour(results[detour.index]);
+            });
+          }
+        }
+      );
+    })
+    .catch((err) => {
+      let errorData = {};
+      if (err) errorData = err.json();
+      return errorData;
+    }).then((err) => {
+      if (err) setErrors(err);
+    });
   };
-
-
-
-
-
-
 
   const handleDeleteDetour = (id) => {
     const data = {
@@ -622,7 +666,7 @@ function TripDetailsPage() {
               <option value=""></option>
               <option value="restaurant">Restaurant</option>
               <option value="cafe">Cafe</option>
-              <option value="gas">Gas</option>
+              <option value="gas_station">Gas Station</option>
               <option value="lodging">Lodging</option>
             </select>
           </span>
